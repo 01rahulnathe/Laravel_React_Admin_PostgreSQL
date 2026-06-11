@@ -35,3 +35,7 @@ jobs:
           node-version: 22
       - name: Build Assets
         run: npm run build
+            - name: Setup Environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
