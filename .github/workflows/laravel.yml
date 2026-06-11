@@ -47,3 +47,10 @@ jobs:
 
       - name: Build Assets
         run: npm run build
+      - name: Setup Environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Run Tests
+        run: php artisan test
