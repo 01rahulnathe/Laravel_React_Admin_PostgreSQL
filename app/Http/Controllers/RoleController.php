@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -13,11 +13,10 @@ class RoleController extends Controller
     {
         $roles = Role::when(
             $request->search,
-            fn($query) =>
-            $query->where(
+            fn ($query) => $query->where(
                 'name',
                 'like',
-                '%' . $request->search . '%'
+                '%'.$request->search.'%'
             )
         )
             ->latest()
@@ -26,7 +25,7 @@ class RoleController extends Controller
 
         return Inertia::render('Roles/Index', [
             'roles' => $roles,
-            'filters' => $request->only('search')
+            'filters' => $request->only('search'),
         ]);
     }
 
@@ -38,11 +37,11 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|unique:roles,name'
+            'name' => 'required|unique:roles,name',
         ]);
 
         Role::create([
-            'name' => $validated['name']
+            'name' => $validated['name'],
         ]);
 
         return redirect()
@@ -53,18 +52,18 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         return Inertia::render('Roles/Edit', [
-            'role' => $role
+            'role' => $role,
         ]);
     }
 
     public function update(Request $request, Role $role)
     {
         $validated = $request->validate([
-            'name' => 'required|unique:roles,name,' . $role->id
+            'name' => 'required|unique:roles,name,'.$role->id,
         ]);
 
         $role->update([
-            'name' => $validated['name']
+            'name' => $validated['name'],
         ]);
 
         return redirect()
@@ -81,8 +80,6 @@ class RoleController extends Controller
             ->with('success', 'Role deleted successfully.');
     }
 
-
-
     public function permissions(Role $role)
     {
         return Inertia::render('Roles/Permissions', [
@@ -94,11 +91,10 @@ class RoleController extends Controller
 
             'rolePermissions' => $role
                 ->permissions
-                ->pluck('id')
+                ->pluck('id'),
 
         ]);
     }
-
 
     public function updatePermissions(
         Request $request,

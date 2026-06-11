@@ -13,7 +13,7 @@ class PermissionController extends Controller
         return Inertia::render('Permissions/Index', [
             'permissions' => Permission::latest()
                 ->paginate(10)
-                ->withQueryString()
+                ->withQueryString(),
         ]);
     }
 
@@ -25,11 +25,11 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|unique:permissions,name'
+            'name' => 'required|unique:permissions,name',
         ]);
 
         Permission::create([
-            'name' => $validated['name']
+            'name' => $validated['name'],
         ]);
 
         return redirect()
@@ -40,18 +40,18 @@ class PermissionController extends Controller
     public function edit(Permission $permission)
     {
         return Inertia::render('Permissions/Edit', [
-            'permission' => $permission
+            'permission' => $permission,
         ]);
     }
 
     public function update(Request $request, Permission $permission)
     {
         $validated = $request->validate([
-            'name' => 'required|unique:permissions,name,' . $permission->id
+            'name' => 'required|unique:permissions,name,'.$permission->id,
         ]);
 
         $permission->update([
-            'name' => $validated['name']
+            'name' => $validated['name'],
         ]);
 
         return redirect()

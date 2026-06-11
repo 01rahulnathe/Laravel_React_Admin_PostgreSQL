@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Exports\UsersExport;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserProfileController extends Controller
 {
@@ -17,8 +17,7 @@ class UserProfileController extends Controller
     {
         $users = UserProfile::when(
             $request->search,
-            fn($query, $search) =>
-            $query->where('name', 'like', "%{$search}%")
+            fn ($query, $search) => $query->where('name', 'like', "%{$search}%")
                 ->orWhere('email', 'like', "%{$search}%")
         )
             ->latest()
@@ -46,7 +45,7 @@ class UserProfileController extends Controller
 
             'password' => 'required|min:6',
 
-            'status' => 'required'
+            'status' => 'required',
 
         ]);
 
@@ -58,7 +57,7 @@ class UserProfileController extends Controller
 
             'password' => bcrypt($validated['password']),
 
-            'status' => $validated['status']
+            'status' => $validated['status'],
 
         ]);
 
@@ -70,17 +69,16 @@ class UserProfileController extends Controller
     public function edit(UserProfile $user)
     {
         return Inertia::render('Users/Edit', [
-            'user' => $user
+            'user' => $user,
         ]);
     }
-
 
     public function update(Request $request, UserProfile $user)
     {
         $validated = $request->validate([
             'name' => 'required|max:100',
-            'email' => 'required|email|unique:user_profiles,email,' . $user->id,
-            'status' => 'required'
+            'email' => 'required|email|unique:user_profiles,email,'.$user->id,
+            'status' => 'required',
         ]);
 
         $user->update($validated);
@@ -89,7 +87,6 @@ class UserProfileController extends Controller
             ->route('users.index')
             ->with('success', 'User updated successfully');
     }
-
 
     public function destroy(UserProfile $user)
     {
@@ -103,7 +100,7 @@ class UserProfileController extends Controller
     public function exportExcel()
     {
         return Excel::download(
-            new UsersExport(),
+            new UsersExport,
             'users.xlsx'
         );
     }

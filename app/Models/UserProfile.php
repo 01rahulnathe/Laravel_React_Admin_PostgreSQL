@@ -3,18 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class UserProfile extends Model
 {
     use LogsActivity;
+
     protected $fillable = [
 
         'name',
         'email',
         'password',
-        'status'
+        'status',
 
     ];
 
@@ -25,13 +26,13 @@ class UserProfile extends Model
             ->logOnly([
                 'name',
                 'email',
-                'status'
+                'status',
             ])
 
             ->logOnlyDirty()
 
             ->setDescriptionForEvent(
-                fn(string $eventName) => "User {$eventName}"
+                fn (string $eventName) => "User {$eventName}"
             );
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Activitylog\Models\Activity;
-use Illuminate\Http\Request;
 
 class ActivityLogController extends Controller
 {
@@ -14,28 +14,22 @@ class ActivityLogController extends Controller
 
             ->when(
                 $request->user,
-                fn($q) =>
-
-                $q->whereHas(
+                fn ($q) => $q->whereHas(
                     'causer',
-                    fn($x) =>
-
-                    $x->where(
+                    fn ($x) => $x->where(
                         'name',
                         'ilike',
-                        '%' . $request->user . '%'
+                        '%'.$request->user.'%'
                     )
                 )
             )
 
             ->when(
                 $request->description,
-                fn($q) =>
-
-                $q->where(
+                fn ($q) => $q->where(
                     'description',
                     'ilike',
-                    '%' . $request->description . '%'
+                    '%'.$request->description.'%'
                 )
             )
 

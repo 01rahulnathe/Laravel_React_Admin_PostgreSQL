@@ -9,7 +9,7 @@ class ActivityLogMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        app()->instance('ip_address',$request->ip());
+        app()->instance('ip_address', $request->ip());
 
         app()->instance(
             'user_agent',

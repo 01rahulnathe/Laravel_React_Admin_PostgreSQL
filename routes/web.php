@@ -1,26 +1,22 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-
-
-
-
-Route::middleware(['auth', 'role:admin'])->group(function () { 
-    Route::resource('users', UserProfileController::class); 
-    Route::get('/users/export/excel',[UserProfileController::class, 'exportExcel'])->name('users.export.excel');
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('users', UserProfileController::class);
+    Route::get('/users/export/excel', [UserProfileController::class, 'exportExcel'])->name('users.export.excel');
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
-    Route::get('roles/{role}/permissions',[RoleController::class, 'permissions'])->name('roles.permissions');
-    Route::post('roles/{role}/permissions',[RoleController::class, 'updatePermissions'])->name('roles.permissions.update');
+    Route::get('roles/{role}/permissions', [RoleController::class, 'permissions'])->name('roles.permissions');
+    Route::post('roles/{role}/permissions', [RoleController::class, 'updatePermissions'])->name('roles.permissions.update');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');

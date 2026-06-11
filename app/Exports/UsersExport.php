@@ -4,10 +4,10 @@ namespace App\Exports;
 
 use App\Models\UserProfile;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class UsersExport implements FromCollection, WithHeadings, ShouldAutoSize
+class UsersExport implements FromCollection, ShouldAutoSize, WithHeadings
 {
     public function collection()
     {
@@ -19,7 +19,7 @@ class UsersExport implements FromCollection, WithHeadings, ShouldAutoSize
                 $user->status == 1
                     ? 'Active'
                     : 'Inactive',
-                $user->created_at ? $user->created_at->format('Y-m-d') : 'N/A'
+                $user->created_at ? $user->created_at->format('Y-m-d') : 'N/A',
             ];
         });
     }
@@ -31,7 +31,7 @@ class UsersExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Name',
             'Email',
             'Status',
-            'Created At'
+            'Created At',
         ];
     }
 }

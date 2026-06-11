@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
 use App\Models\UserProfile;
-use Spatie\Permission\Models\Role;
+use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class DashboardController extends Controller
 {
@@ -25,7 +25,7 @@ class DashboardController extends Controller
 
                 'totalPermissions' => Permission::count(),
 
-            ]
+            ],
 
         ]);
     }
