@@ -5,18 +5,23 @@ namespace App\Exports;
 use App\Models\UserProfile;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class UsersExport implements FromCollection, WithHeadings
+class UsersExport implements FromCollection, WithHeadings, ShouldAutoSize
 {
     public function collection()
     {
-        return UserProfile::select(
-            'id',
-            'name',
-            'email',
-            'status',
-            'created_at'
-        )->get();
+        return UserProfile::get()->map(function ($user) {
+            return [
+                $user->id,
+                $user->name,
+                $user->email,
+                $user->status == 1
+                    ? 'Active'
+                    : 'Inactive',
+                $user->created_at ? $user->created_at->format('Y-m-d') : 'N/A'
+            ];
+        });
     }
 
     public function headings(): array
