@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -96,5 +98,13 @@ class UserProfileController extends Controller
         return redirect()
             ->route('users.index')
             ->with('success', 'User deleted successfully');
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(
+            new UsersExport(),
+            'users.xlsx'
+        );
     }
 }

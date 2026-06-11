@@ -56,6 +56,16 @@ export default function Index({ users, filters }) {
                         </div>
 
                         <div className="col-md-6 text-end">
+                                <a
+                                    href="/users/export/excel"
+                                    className="btn btn-success"
+                                >
+
+                                    <i className="bi bi-file-earmark-excel me-2"></i>
+
+                                    Export Excel
+
+                                </a>
 
                             <Link
                                 href="/users/create"

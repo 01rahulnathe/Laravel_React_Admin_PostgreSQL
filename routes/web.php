@@ -15,6 +15,7 @@ use Inertia\Inertia;
 
 Route::middleware(['auth', 'role:admin'])->group(function () { 
     Route::resource('users', UserProfileController::class); 
+    Route::get('/users/export/excel',[UserProfileController::class, 'exportExcel'])->name('users.export.excel');
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
     Route::get('roles/{role}/permissions',[RoleController::class, 'permissions'])->name('roles.permissions');
