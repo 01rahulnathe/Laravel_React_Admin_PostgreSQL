@@ -1,7 +1,27 @@
 import AppLayout from '@/Layouts/AppLayout';
+import { router } from '@inertiajs/react';
+import { useState } from 'react';
 
-export default function Index({ logs })
-{
+export default function Index({ logs }) {
+
+    const [searchUser, setSearchUser] = useState('');
+    const [searchDescription, setSearchDescription] = useState('');
+
+    const search = () => {
+
+        router.get(
+            '/activity-logs',
+            {
+                user: searchUser,
+                description: searchDescription
+            },
+            {
+                preserveState: true
+            }
+        );
+
+    };
+
     return (
 
         <AppLayout>
@@ -20,71 +40,198 @@ export default function Index({ logs })
 
                 <div className="card-body">
 
-                    <table className="table table-bordered">
+                    <div className="row mb-3">
 
-                        <thead>
+                        <div className="col-md-4">
 
-                        <tr>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Search User"
+                                value={searchUser}
+                                onChange={(e) =>
+                                    setSearchUser(e.target.value)
+                                }
+                            />
 
-                            <th>ID</th>
+                        </div>
 
-                            <th>User</th>
+                        <div className="col-md-4">
 
-                            <th>Description</th>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Search Description"
+                                value={searchDescription}
+                                onChange={(e) =>
+                                    setSearchDescription(e.target.value)
+                                }
+                            />
 
-                            <th>Date</th>
+                        </div>
 
-                        </tr>
+                        <div className="col-md-2">
+
+                            <button
+                                className="btn btn-primary"
+                                onClick={search}
+                            >
+
+                                Search
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <table className="table table-bordered table-striped">
+
+                        <thead className="table-dark">
+
+                            <tr>
+
+                                <th>ID</th>
+
+                                <th>User</th>
+
+                                <th>Description</th>
+
+                                <th>Date</th>
+
+                            </tr>
 
                         </thead>
 
                         <tbody>
 
-                        {
+                            {
 
-                            logs.data.map(log => (
+                                logs.data.length > 0 ?
 
-                                <tr key={log.id}>
+                                    logs.data.map(log => (
 
-                                    <td>
+                                        <tr key={log.id}>
 
-                                        {log.id}
+                                            <td>
 
-                                    </td>
+                                                {log.id}
 
-                                    <td>
+                                            </td>
 
-                                        {log.causer?.name}
+                                            <td>
 
-                                    </td>
+                                                {log.causer?.name}
 
-                                    <td>
+                                            </td>
 
-                                        {log.description}
+                                            <td>
 
-                                    </td>
+                                                {
 
-                                    <td>
+                                                    log.description === 'created'
+                                                        ?
 
-                                        {
+                                                        <span className="badge bg-success">
 
-                                            new Date(
-                                                log.created_at
-                                            ).toLocaleString()
+                                                            User Created
 
-                                        }
+                                                        </span>
 
-                                    </td>
+                                                        :
 
-                                </tr>
+                                                        log.description === 'updated'
+                                                            ?
 
-                            ))
+                                                            <span className="badge bg-primary">
 
-                        }
+                                                                User Updated
+
+                                                            </span>
+
+                                                            :
+
+                                                            log.description === 'deleted'
+                                                                ?
+
+                                                                <span className="badge bg-danger">
+
+                                                                    User Deleted
+
+                                                                </span>
+
+                                                                :
+
+                                                                <span className="badge bg-secondary">
+
+                                                                    {log.description}
+
+                                                                </span>
+
+                                                }
+
+                                            </td>
+
+                                            <td>
+
+                                                {
+
+                                                    new Date(
+                                                        log.created_at
+                                                    ).toLocaleString()
+
+                                                }
+
+                                            </td>
+
+                                        </tr>
+
+                                    ))
+
+                                    :
+
+                                    <tr>
+
+                                        <td
+                                            colSpan="4"
+                                            className="text-center"
+                                        >
+
+                                            No Records Found
+
+                                        </td>
+
+                                    </tr>
+
+                            }
 
                         </tbody>
 
                     </table>
+
+                    <div className="mt-3">
+
+                        Showing
+
+                        {' '}
+
+                        {logs.from}
+
+                        -
+
+                        {logs.to}
+
+                        {' '}
+
+                        of
+
+                        {' '}
+
+                        {logs.total}
+
+                        records
+
+                    </div>
 
                 </div>
 
@@ -93,4 +240,5 @@ export default function Index({ logs })
         </AppLayout>
 
     );
+
 }
