@@ -22,3 +22,6 @@ jobs:
           extensions: mbstring, xml, ctype, json, bcmath, pdo_pgsql
       - name: Install Composer Dependencies
         run: composer install --prefer-dist --no-interaction
+      - name: PHP Syntax Check
+        run: |
+          find app routes database -name "*.php" -print0 | xargs -0 -n1 php -l
