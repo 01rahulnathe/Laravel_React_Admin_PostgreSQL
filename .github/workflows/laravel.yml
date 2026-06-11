@@ -111,9 +111,17 @@ jobs:
 
             cd /var/www/html/Laravel_React_Admin_PostgreSQL
 
-            git pull origin main
+            git config --global --add safe.directory /var/www/html/Laravel_React_Admin_PostgreSQL
 
-            composer install --no-dev --optimize-autoloader
+            git restore .
+
+            git clean -fd
+
+            git fetch origin
+
+            git reset --hard origin/main
+
+            composer install --no-dev --optimize-autoloader --no-interaction
 
             npm install
 
