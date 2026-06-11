@@ -27,3 +27,9 @@ jobs:
           find app routes database -name "*.php" -print0 | xargs -0 -n1 php -l
       - name: Laravel Pint
         run: ./vendor/bin/pint --test
+      - name: PHPStan
+        run: ./vendor/bin/phpstan analyse
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
