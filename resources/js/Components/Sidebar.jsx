@@ -77,6 +77,17 @@ export default function Sidebar() {
                     </Link>
                 </li>
 
+                <Link
+                    href="/activity-logs"
+                    className="nav-link"
+                >
+
+                    <i className="bi bi-clock-history"></i>
+
+                    Activity Logs
+
+                </Link>
+
             </ul>
 
         </div>
