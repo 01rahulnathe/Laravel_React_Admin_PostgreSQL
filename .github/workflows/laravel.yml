@@ -25,3 +25,5 @@ jobs:
       - name: PHP Syntax Check
         run: |
           find app routes database -name "*.php" -print0 | xargs -0 -n1 php -l
+      - name: Laravel Pint
+        run: ./vendor/bin/pint --test
