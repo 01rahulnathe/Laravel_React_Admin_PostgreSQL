@@ -15,27 +15,35 @@ jobs:
 
       - name: Checkout Code
         uses: actions/checkout@v4
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.3
           extensions: mbstring, xml, ctype, json, bcmath, pdo_pgsql
+          coverage: none
+
       - name: Install Composer Dependencies
         run: composer install --prefer-dist --no-interaction
+
       - name: PHP Syntax Check
         run: |
           find app routes database -name "*.php" -print0 | xargs -0 -n1 php -l
+
       - name: Laravel Pint
         run: ./vendor/bin/pint --test
+
       - name: PHPStan
         run: ./vendor/bin/phpstan analyse
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+
+      - name: Install Node Dependencies
+        run: npm install
+
       - name: Build Assets
         run: npm run build
-            - name: Setup Environment
-        run: |
-          cp .env.example .env
-          php artisan key:generate
