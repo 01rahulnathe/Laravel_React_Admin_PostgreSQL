@@ -27,7 +27,26 @@
         "bootstrap-icons": "^1.13.1",
         "cors": "^2.8.6",
         "express": "^5.2.1",
-        "socket.io": "^4.5.4",
+        "socket.io": "^4.8.3",
+        "socket.io-client": "^4.8.3",
         "sweetalert2": "^11.26.25"
-    }
+    },
+    "name": "laravel-react-inertia",
+    "version": "1.0.0",
+    "description": "A modern, production-ready Admin Panel built with **Laravel 12**, **React 18**, **Inertia.js**, **PostgreSQL**, and **Bootstrap 5**.",
+    "main": "postcss.config.js",
+    "directories": {
+        "test": "tests"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/01rahulnathe/Laravel_React_Admin_PostgreSQL.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/01rahulnathe/Laravel_React_Admin_PostgreSQL/issues"
+    },
+    "homepage": "https://github.com/01rahulnathe/Laravel_React_Admin_PostgreSQL#readme"
 }

@@ -10,6 +10,12 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+Route::get('/chat', function () {
+
+    return Inertia::render('ChatPage');
+
+});
+
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('users', UserProfileController::class);
     Route::get('/users/export/excel', [UserProfileController::class, 'exportExcel'])->name('users.export.excel');
